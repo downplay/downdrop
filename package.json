@@ -1,52 +1,45 @@
 {
-    "name": "downright",
-    "description": "Right-click context menu HOC for React.",
-    "version": "0.7.0",
+    "name": "downdrop",
+    "description": "Pleasantly simple drag-and-drop for React",
+    "version": "0.1.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/downplay/downright.git"
+        "url": "https://github.com/downplay/downdrop.git"
     },
     "main": "main.js",
     "files": [
         "main.js.map",
         "themes",
-        "docs/coverImage.png",
-        "docs/themedMenu.png"
+        "docs/coverImage.png"
     ],
     "scripts": {
         "precommit": "lint-staged",
         "scrub": "babel-node ./build/scrub.js",
         "assemble": "babel-node ./build/assemble.js",
         "build": "npm-run-all scrub build-all",
-        "build-all":
-            "npm-run-all --parallel build-core build-theme-default build-theme-bem build-theme-dark assemble",
-        "build-core":
-            "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=core webpack --config ./build/entry.js",
-        "build-core-dev":
-            "cross-env NODE_ENV=development DOWNRIGHT_BUILD=core webpack --config ./build/entry.js --watch",
-        "build-theme-default":
-            "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-default  webpack --config ./build/entry.js",
-        "build-theme-bem":
-            "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-bem  webpack --config ./build/entry.js",
-        "build-theme-dark":
-            "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-dark  webpack --config ./build/entry.js",
+        "build-all": "npm-run-all --parallel build-core build-theme-default build-theme-bem build-theme-dark assemble",
+        "build-core": "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=core webpack --config ./build/entry.js",
+        "build-core-dev": "cross-env NODE_ENV=development DOWNRIGHT_BUILD=core webpack --config ./build/entry.js --watch",
+        "build-theme-default": "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-default  webpack --config ./build/entry.js",
+        "build-theme-bem": "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-bem  webpack --config ./build/entry.js",
+        "build-theme-dark": "cross-env NODE_ENV=production  DOWNRIGHT_BUILD=theme-dark  webpack --config ./build/entry.js",
         "examples": "node examples/entry.js",
         "examples-watch": "nodemon examples/entry.js"
     },
     "lint-staged": {
-        "*.{js,jsx}": ["eslint", "git add"]
+        "*.{js,jsx}": [
+            "eslint",
+            "git add"
+        ]
     },
     "keywords": [
         "react",
         "reactjs",
-        "right-click",
-        "menu",
-        "context-menu",
+        "drag-and-drop",
         "javascript",
         "react-component",
         "hoc",
-        "ui",
-        "transitions"
+        "ui"
     ],
     "peerDependencies": {
         "prop-types": "^15.0.0 || ^16.0.0",
@@ -54,7 +47,6 @@
         "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
     },
     "dependencies": {
-        "downstyle": "^0.1.1",
         "hoist-non-react-statics": "^2.0.0",
         "invariant": "^2.0.0"
     },
@@ -66,7 +58,6 @@
         "babel-loader": "^7.1.1",
         "babel-plugin-add-react-displayname": "^0.0.4",
         "babel-plugin-module-resolver": "^2.7.1",
-        "babel-plugin-styled-components": "^1.1.7",
         "babel-plugin-syntax-dynamic-import": "^6.18.0",
         "babel-plugin-transform-class-properties": "^6.24.1",
         "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -107,7 +98,6 @@
         "react-router-dom": "^4.1.2",
         "reset-css": "^2.2.1",
         "style-loader": "^0.18.2",
-        "styled-components": "^2.1.2",
         "svg-url-loader": "^2.1.1",
         "webpack": "^3.4.1",
         "webpack-dev-middleware": "^1.12.0",

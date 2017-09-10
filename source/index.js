@@ -1,5 +1,5 @@
-import ContextMenuConnect from "./ContextMenuConnect";
-import ContextMenuProvider from "./ContextMenuProvider";
+import DragDropProvider from "./DragDropProvider";
+import DropTarget from "./DropTarget";
+import DragHandle from "./DragHandle";
 
-export default ContextMenuConnect;
-export { ContextMenuConnect as contextMenu, ContextMenuProvider };
+export { DragDropProvider, DropTarget, DragHandle };

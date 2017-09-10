@@ -10,15 +10,15 @@ First release.
 
 ## Why another drag-and-drop library?
 
-Arguably the most popular library for drag-and-drop in React is `react-dnd` - which is an excellent and powerful library. In a real world use case, however, I came up against some limitations with it and decided to roll my own. The design decisions that differentiate `downdrop` from other solutions are:
+To date there are a number of quality drag-and-drop implementations available for React, ranging from the low-level but powerful (the popular and arguably "de-facto" `react-dnd`) to highly-featured but focussed (`react-beautiful-dnd` or `react-sortable-hoc`). In a real world use case, however, I came up against some limitations in these libraries and decided to roll my own. The design decisions that differentiate `downdrop` from other solutions are:
 
 * Use plain mouse and touch events to implement the interface:
   - Entirely avoids the [complexities](http://mereskin.github.io/dnd/) and [brokenness](https://stackoverflow.com/questions/14203734/dragend-dragenter-and-dragleave-firing-off-immediately-when-i-drag) of the HTML5 drag-and-drop API.
-  - We don't have to configure the provider with various "backends" to make it functional. It just works. (Note: React Native should eventually be supported with an additional library)
-  - No need to do [all this configuration](https://github.com/yahoo/react-dnd-touch-backend/issues/7) for what should be the *default* case of working on both web and mobile
+  - We don't have to configure the provider with various "backends" to make it functional. It just works. (Note: React Native should eventually be supported with an additional dependency)
+  - No need for [all of this configuration](https://github.com/yahoo/react-dnd-touch-backend/issues/7) for what should be the *default* case of working on both web and mobile
 * Minimal API surface area, uses plain components instead of fancy but harder to learn HOCs, get useful results in very little time
 * Class-based components turn out to be far more performant for rendering, at least as of React v15, particularly noticable when using drag operations on elemnts in very large lists
-* Leave concerns of rendering and state management almost entirely up to the user; fits any state model or backing store
+* Leave concerns of rendering and state management almost entirely up to the user; fit any state model or backing store, enable any UI paradigm
 * Support nested dragging as a first-class use case, e.g. Trello-like interfaces
 * Support multiple simultaneous drag operations (for multi-touch environments)
 * Do not support file dragging; this is fundamentally a completely different operation, both conceptually and in terms of implementation
@@ -43,7 +43,7 @@ const DraggableList = ({items, onDrag, onOver, onDrop}) => (
 );
 ```
 
-The implementation details of onDrag, onOver and onDrop, and how they might modify state to provide visual feedback, are left up to the developer. More complete reference implementations are provided in the [examples](https://github.com/downplay/downdrop/tree/master/examples/source/examples) but this render example shows off the simple nature of the provided primitives.
+The implementation details of onDrag, onOver and onDrop, and how they might modify state to provide visual feedback, are left to the developer. More complete reference implementations are provided in the [examples](https://github.com/downplay/downdrop/tree/master/examples/source/examples) but this render example shows off the simplistic nature of the supplied primitives.
 
 ## Installation
 
@@ -57,7 +57,7 @@ Or `npm` if you prefer.
 
 ### DragDropProvider Setup
 
-Downdrop utilises a provider component. This can be placed at the top level of your app if you wish, although this is not required; but it must at least wrap all `DragHandle`s and `DropTarget`s that need to work together. You may wish to handle some events at the provider level.
+Downdrop utilises a provider component. This can be placed at the top level of your app if you wish, although this is not required; but it must at least wrap all `DragHandle`s and `DropTarget`s that need to work together. You may wish to handle some events at the provider level; this allows you to destroy the dragged component during drag yet still respond to events.
 
 ```jsx
 import { DragDropProvider } from "downdrop";
@@ -68,8 +68,6 @@ import { DragDropProvider } from "downdrop";
 ```
 
 #### properties
-
-These properties affect all context menus under this provider.
 
 `onDrop: function(event: SyntheticEvent, data: any)`
 

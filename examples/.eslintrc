@@ -4,6 +4,7 @@
         "import/no-extraneous-dependencies": "off",
         "import/no-unresolved": "off",
         "no-plusplus": 0,
-        "no-restricted-syntax": 0
+        "no-restricted-syntax": 0,
+        "react/no-multi-comp": 0
     }
 }

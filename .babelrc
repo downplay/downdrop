@@ -18,7 +18,7 @@
             "babel-plugin-module-resolver",
             {
                 "alias": {
-                    "downright": "./source/index"
+                    "downdrop": "./source/index"
                 }
             }
         ]

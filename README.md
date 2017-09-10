@@ -97,6 +97,7 @@ First release
 
 * Tests
 * React Native support
+* Consider shipping some higher-level features, maybe in separate packages; e.g. OrderableList, Positionable
 
 ## Bugs and Issues
 

@@ -1,8 +1,8 @@
 import webpack from "webpack";
 import path from "path";
 
-const downrightSource = file => path.resolve(__dirname, "../dist", file);
-// const downrightSource = path.resolve(__dirname, "../source/index.js");
+// const librarySource = file => path.resolve(__dirname, "../dist", file);
+const librarySource = () => path.resolve(__dirname, "../source/index.js");
 
 const webpackConfig = {
     context: path.resolve(__dirname, ".."),
@@ -38,15 +38,7 @@ const webpackConfig = {
         // NOTE: Here I'm aliasing everything so the imports in the exanples represent how importing from the released
         // package would look. Normally using the module direct from npm you do not have to alias in your webpack.
         alias: {
-            "downright/themes/default.css": downrightSource(
-                "themes/default.css"
-            ),
-            "downright/themes/default": downrightSource("themes/default.js"),
-            "downright/themes/bem.css": downrightSource("themes/bem.css"),
-            "downright/themes/bem": downrightSource("themes/bem.js"),
-            "downright/themes/dark.css": downrightSource("themes/dark.css"),
-            "downright/themes/dark": downrightSource("themes/dark.js"),
-            downright: downrightSource("main.js")
+            downdrop: librarySource("main.js")
         }
     },
     module: {
@@ -76,7 +68,8 @@ const webpackConfig = {
                                     }
                                 ],
                                 "babel-plugin-transform-object-rest-spread",
-                                "babel-plugin-transform-decorators-legacy"
+                                "babel-plugin-transform-decorators-legacy",
+                                "babel-plugin-emotion"
                             ],
                             presets: [
                                 "babel-preset-react",

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { dragDropContextShape } from './DragDropProvider';
+import { dragDropContextShape } from "./DragDropProvider";
 
 export default class DragHandle extends Component {
     static propTypes = {
         onDrag: PropTypes.func,
-        data: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+        data: PropTypes.any.isRequired
     };
 
     static defaultProps = {

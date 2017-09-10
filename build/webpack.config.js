@@ -1,36 +1,20 @@
 import webpack from "webpack";
 import path from "path";
 import nodeExternals from "webpack-node-externals";
-import ExtractTextPlugin from "extract-text-webpack-plugin";
+// import ExtractTextPlugin from "extract-text-webpack-plugin";
 
-const downrightCore = path.resolve(__dirname, "../source/index.js");
-const themeDefault = path.resolve(__dirname, "../source/themes/default.js");
-const themeDark = path.resolve(__dirname, "../source/themes/dark.js");
+const mainSource = path.resolve(__dirname, "../source/index.js");
 
 // Random hashed CSS classes
-let cssIdent = "[name]__[local]___[hash:base64:5]";
 let mainOutputPath = "themes/[name].js";
-let cssOutputPath = "themes/default.css";
 const externals = [nodeExternals()];
 const entry = {};
 
-switch (process.env.DOWNRIGHT_BUILD) {
+switch (process.env.DOWNDROP_BUILD) {
     case "core":
-        entry.main = [downrightCore];
+        entry.main = [mainSource];
         mainOutputPath = "[name].js";
         externals.push(/themes\/default/);
-        break;
-    case "theme-default":
-        entry.default = themeDefault;
-        break;
-    case "theme-dark":
-        entry.dark = themeDark;
-        cssOutputPath = "themes/dark.css";
-        break;
-    case "theme-bem":
-        entry.bem = themeDefault;
-        cssIdent = "downright__contextmenu__[local]";
-        cssOutputPath = "themes/bem.css";
         break;
     default:
         break;
@@ -60,7 +44,7 @@ const webpackConfig = {
     plugins: __DEV__
         ? []
         : [
-              new ExtractTextPlugin(cssOutputPath),
+              // new ExtractTextPlugin(cssOutputPath),
               new webpack.optimize.UglifyJsPlugin({
                   sourceMap: true
               }),
@@ -120,7 +104,8 @@ const webpackConfig = {
                     loader: "svg-url-loader",
                     options: {}
                 }
-            },
+            }
+            /* ,
             __DEV__
                 ? {
                       test: /\.css$/,
@@ -132,7 +117,7 @@ const webpackConfig = {
                           fallback: "style-loader",
                           use: `css-loader?modules&importLoaders=1&localIdentName=${cssIdent}!postcss-loader`
                       })
-                  }
+                } */
         ]
     }
 };

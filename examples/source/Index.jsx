@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "react-emotion";
 
 const Page = styled.div`
     height: 100%;
@@ -25,22 +25,19 @@ const ItemLink = styled(Link)`
     text-align: center;
 `;
 
-const Item = ({ children, ...others }) =>
+const Item = ({ children, ...others }) => (
     <MenuItem>
-        <ItemLink {...others}>
-            {children}
-        </ItemLink>
-    </MenuItem>;
+        <ItemLink {...others}>{children}</ItemLink>
+    </MenuItem>
+);
 
 // TODO: Why am I rendering a menu by hand when I have a menu rendering system?
 
-export default () =>
+export default () => (
     <Page>
-        <Header>Downright Fantastic Examples</Header>
+        <Header>Downdrop Examples</Header>
         <Menu>
-            <Item to="/simple">Simplest example</Item>
-            <Item to="/nested">Nested menus and options</Item>
-            <Item to="/submenus">Submenus and Callbacks</Item>
-            <Item to="/styling">Styles and Themeing</Item>
+            <Item to="/orderable">Orderable List</Item>
         </Menu>
-    </Page>;
+    </Page>
+);

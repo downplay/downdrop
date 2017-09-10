@@ -47,8 +47,11 @@
         "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
     },
     "dependencies": {
+        "babel-plugin-emotion": "^7.2.2",
+        "emotion": "^7.2.2",
         "hoist-non-react-statics": "^2.0.0",
-        "invariant": "^2.0.0"
+        "invariant": "^2.0.0",
+        "react-emotion": "^7.2.2"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.2",

@@ -6,11 +6,13 @@ import { dragDropContextShape } from "./DragDropProvider";
 export default class DragHandle extends Component {
     static propTypes = {
         onDrag: PropTypes.func,
-        data: PropTypes.any.isRequired
+        data: PropTypes.any.isRequired,
+        element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     };
 
     static defaultProps = {
-        onDrag: null
+        onDrag: null,
+        element: "div"
     };
 
     static contextTypes = {
@@ -27,11 +29,17 @@ export default class DragHandle extends Component {
     };
 
     render() {
-        const { children, data, ...others } = this.props;
+        const {
+            children,
+            data,
+            element,
+            element: Element,
+            ...others
+        } = this.props;
         return (
-            <div {...others} onMouseDown={this.handleMouseDown}>
+            <Element {...others} onMouseDown={this.handleMouseDown}>
                 {children}
-            </div>
+            </Element>
         );
     }
 }

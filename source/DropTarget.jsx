@@ -6,12 +6,14 @@ export default class DropTarget extends Component {
     static propTypes = {
         onOver: PropTypes.func.isRequired,
         onMove: PropTypes.func,
-        onLeave: PropTypes.func
+        onLeave: PropTypes.func,
+        element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     };
 
     static defaultProps = {
         onMove: null,
-        onLeave: null
+        onLeave: null,
+        element: "div"
     };
 
     static contextTypes = {
@@ -61,10 +63,17 @@ export default class DropTarget extends Component {
     };
 
     render() {
-        const { children, onOver, onMove, onLeave, ...others } = this.props;
+        const {
+            children,
+            onOver,
+            onMove,
+            onLeave,
+            element: Element,
+            ...others
+        } = this.props;
         // TODO: Touch support
         return (
-            <div
+            <Element
                 {...others}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -72,7 +81,7 @@ export default class DropTarget extends Component {
                 onMouseUp={this.handleMouseUp}
             >
                 {children}
-            </div>
+            </Element>
         );
     }
 }

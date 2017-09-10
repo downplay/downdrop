@@ -34,7 +34,6 @@ export default class OrderableList extends Component {
         const spliceIndex =
             dragPosition - (dragPosition > this.state.dragIndex ? 1 : 0);
         filtered.splice(spliceIndex, 0, mapped[this.state.dragIndex]);
-        console.log(dragPosition, filtered);
         return filtered;
     }
 
@@ -43,10 +42,12 @@ export default class OrderableList extends Component {
     };
 
     handleOver = (e, itemIndex) => {
-        console.log(itemIndex);
+        if (itemIndex === this.state.dragIndex) {
+            return;
+        }
         this.setState(prevState => ({
             dragPosition:
-                itemIndex + (itemIndex === prevState.dragIndex ? 1 : 0)
+                itemIndex + (itemIndex >= prevState.dragPosition ? 1 : 0)
         }));
     };
 

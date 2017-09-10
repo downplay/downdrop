@@ -72,13 +72,6 @@ Handler to be called when the user ends a drag operation by releasing the mouse
 Examples are found in https://github.com/downplay/downdrop/tree/master/examples. To run them, clone the repository and execute:
 
 ```
-npm run build
-npm run examples
-```
-
-or
-
-```
 yarn build
 yarn examples
 ```

@@ -45,6 +45,7 @@ export default class DragDropProvider extends Component {
     contextBeginDrag = (event, data) => {
         window.addEventListener("mousemove", this.handleMouseMove);
         window.addEventListener("mouseup", this.handleMouseUp);
+        console.log(data);
         this.setState({ isDragging: true, dragData: data });
     };
 

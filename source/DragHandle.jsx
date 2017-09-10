@@ -5,12 +5,13 @@ import { dragDropContextShape } from "./DragDropProvider";
 
 export default class DragHandle extends Component {
     static propTypes = {
+        data: PropTypes.any,
         onDrag: PropTypes.func,
-        data: PropTypes.any.isRequired,
         element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     };
 
     static defaultProps = {
+        data: null,
         onDrag: null,
         element: "div"
     };

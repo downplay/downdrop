@@ -15,49 +15,58 @@ const ItemWrapper = styled.div`
 `;
 
 export default class OrderableList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: ["foo", "bar", "baz"],
-            dragIndex: null,
-            dragPosition: null
-        };
-    }
+    state = {
+        items: ["foo", "bar", "baz"],
+        dragIndex: null,
+        dragPosition: null
+    };
 
-    reorderItems(
-        items = this.state.items,
-        dragPosition = this.state.dragPosition
-    ) {
+    mapItems(items = this.state.items, dragPosition = this.state.dragPosition) {
+        const mapped = items.map((item, index) => ({ item, index }));
         if (dragPosition === null) {
-            return items;
+            return mapped;
         }
         // List with the original item removed
-        const filtered = items
+        const filtered = mapped
             .slice(0, this.state.dragIndex)
-            .concat(this.state.items.slice(this.state.dragIndex + 1));
+            .concat(mapped.slice(this.state.dragIndex + 1));
         // Splice in at one position earlier if after the removed slot
         const spliceIndex =
             dragPosition - (dragPosition > this.state.dragIndex ? 1 : 0);
-        filtered.splice(spliceIndex, 0, [items[this.state.dragIndex]]);
+        filtered.splice(spliceIndex, 0, mapped[this.state.dragIndex]);
+        console.log(dragPosition, filtered);
         return filtered;
     }
 
+    handleDrag = (e, itemIndex) => {
+        this.setState({ dragIndex: itemIndex });
+    };
+
     handleOver = (e, itemIndex) => {
+        console.log(itemIndex);
         this.setState(prevState => ({
-            dragPosition: itemIndex + (itemIndex === prevState ? 1 : 0)
+            dragPosition:
+                itemIndex + (itemIndex === prevState.dragIndex ? 1 : 0)
         }));
     };
 
     handleDrop = (e, itemIndex) => {
         this.setState(prevState => ({
-            items: this.reorderItems(prevState.items, itemIndex),
+            items: Object.values(this.mapItems(prevState.items, itemIndex)).map(
+                o => o.item
+            ),
             dragPosition: null,
             dragIndex: null
         }));
     };
 
-    renderItem = (item, index) => (
-        <DropTarget key={item} onOver={this.handleOver} element="li">
+    renderItem = ({ item, index }) => (
+        <DropTarget
+            key={item}
+            data={index}
+            onOver={this.handleOver}
+            element="li"
+        >
             <DragHandle data={index} onDrag={this.handleDrag}>
                 <ItemWrapper>{item}</ItemWrapper>
             </DragHandle>
@@ -66,9 +75,7 @@ export default class OrderableList extends Component {
 
     render = () => (
         <DragDropProvider onDrop={this.handleDrop}>
-            <ListWrapper>
-                {this.reorderItems().map(this.renderItem)}
-            </ListWrapper>
+            <ListWrapper>{this.mapItems().map(this.renderItem)}</ListWrapper>
         </DragDropProvider>
     );
 }

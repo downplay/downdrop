@@ -16,26 +16,34 @@ Arguably the most popular library for drag-and-drop in React is `react-dnd` - wh
   - Entirely avoids the [complexities](http://mereskin.github.io/dnd/) and [brokenness](https://stackoverflow.com/questions/14203734/dragend-dragenter-and-dragleave-firing-off-immediately-when-i-drag) of the HTML5 drag-and-drop API.
   - We don't have to configure the provider with various "backends" to make it functional. It just works. (Note: React Native should eventually be supported with an additional library)
   - No need to do [all this configuration](https://github.com/yahoo/react-dnd-touch-backend/issues/7) for what should be the *default* case of working on both web and mobile
-* Minimal API surface area, uses simple components instead of fancy but harder to learn HOCs, get useful results in very little time
+* Minimal API surface area, uses plain components instead of fancy but harder to learn HOCs, get useful results in very little time
 * Class-based components turn out to be far more performant for rendering, at least as of React v15, particularly noticable when using drag operations on elemnts in very large lists
-* Leave concerns of rendering and state management largely up to the user; fits any state model
+* Leave concerns of rendering and state management almost entirely up to the user; fits any state model or backing store
 * Support nested dragging as a first-class use case, e.g. Trello-like interfaces
 * Support multiple simultaneous drag operations (for multi-touch environments)
 * Do not support file dragging; this is fundamentally a completely different operation, both conceptually and in terms of implementation
 
-## Usage exmaple
+## Usage example
+
+The term "drag-and-drop" encompasses a wide variety of different scenarios, so it is not really possible to document any single "default" use case. However, a list that can be rearranged by dragging items might be rendered thusly:
 
 ```javascript
-import { DropTarget } from "downdrop";
+import { DragDropProvider, DragHandle DropTarget } from "downdrop";
 
-class OrderableList extends Component {
-    render() {
-        return (
-            
-        )
-    }
-}
+const DraggableList = ({items, onDrag, onOver, onDrop}) => (
+    <DragDropProvider onDrop={this.handleDrop}>
+        {this.props.items.map(item => (
+            <DropTarget key={item.id} data={item} onOver={this.handleOver}>
+                <DragHandle data={item} onDrag={this.handleDrag}>
+                    <Item>{item.text}</Item>
+                </DragHandle>
+            </DropTarget>
+        ))}
+    </DragDropProvider>
+);
 ```
+
+The implementation details of onDrag, onOver and onDrop, and how they might modify state to provide visual feedback, are left up to the developer. More complete reference implementations are provided in the [examples](https://github.com/downplay/downdrop/tree/master/examples/source/examples) but this render example shows off the simple nature of the provided primitives.
 
 ## Installation
 
@@ -69,7 +77,7 @@ Handler to be called when the user ends a drag operation by releasing the mouse
 
 ## Examples
 
-Examples are found in https://github.com/downplay/downdrop/tree/master/examples. To run them, clone the repository and execute:
+Examples are found in https://github.com/downplay/downdrop/tree/master/examples/source/examples. To run them, clone the repository and execute:
 
 ```
 yarn build
@@ -90,6 +98,7 @@ First release
 
 * Tests
 * React Native support
+* Provide HOC in addition to component primitives 
 * Consider shipping some higher-level features, maybe in separate packages; e.g. OrderableList, Positionable
 
 ## Bugs and Issues

@@ -1,8 +1,6 @@
 # Downdrop
 
-A lightweight and simple to use .
-
-<img src="docs/coverImage.png" width="359" title="What it looks like">
+Pleasantly simple drag-and-drop for React Web.
 
 ## Latest version: 0.1.0
 

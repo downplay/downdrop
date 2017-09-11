@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { DragDropProvider, DragHandle, DropTarget } from "downdrop";
-import styled from "react-emotion";
 
-const ListWrapper = styled.ul`
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-`;
-
-const ItemWrapper = styled.div`
-    cursor: pointer;
-    border: solid 1px black;
-    background-color: #fcc;
-`;
+import sampleList from "../resources/sampleList";
+import { ListWrapper, ItemWrapper } from "./commonStyles";
 
 export default class OrderableList extends Component {
     state = {
-        items: ["foo", "bar", "baz"],
+        items: sampleList,
         dragIndex: null,
         dragPosition: null
     };
@@ -51,11 +41,11 @@ export default class OrderableList extends Component {
         }));
     };
 
-    handleDrop = (e, itemIndex) => {
+    handleDrop = () => {
         this.setState(prevState => ({
-            items: Object.values(this.mapItems(prevState.items, itemIndex)).map(
-                o => o.item
-            ),
+            items: Object.values(
+                this.mapItems(prevState.items, prevState.dragPosition)
+            ).map(o => o.item),
             dragPosition: null,
             dragIndex: null
         }));
@@ -69,7 +59,9 @@ export default class OrderableList extends Component {
             element="li"
         >
             <DragHandle data={index} onDrag={this.handleDrag}>
-                <ItemWrapper>{item}</ItemWrapper>
+                <ItemWrapper>
+                    <span>{item}</span>
+                </ItemWrapper>
             </DragHandle>
         </DropTarget>
     );

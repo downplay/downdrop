@@ -38,6 +38,9 @@ export default () => (
         <Header>Downdrop Examples</Header>
         <Menu>
             <Item to="/orderable">Orderable List</Item>
+            <Item to="/orderable-portal">
+                Orderable List, using Portal for dragging
+            </Item>
             <Item to="/positionable">Positionable Item</Item>
         </Menu>
     </Page>

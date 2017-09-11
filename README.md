@@ -15,11 +15,11 @@ To date there are a number of quality drag-and-drop implementations available fo
   - We don't have to configure the provider with various "backends" to make it functional. It just works. (Note: React Native should eventually be supported with an additional dependency)
   - No need for [all of this configuration](https://github.com/yahoo/react-dnd-touch-backend/issues/7) for what should be the *default* case of working on both web and mobile
 * Minimal API surface area, uses plain components instead of fancy but harder to learn HOCs, get useful results in very little time
-* Class-based components turn out to be far more performant for rendering, at least as of React v15, particularly noticable when using drag operations on elemnts in very large lists
+* Class-based components turn out to be far more performant for rendering, at least as of React v15, particularly noticable when using drag operations on elements in very large lists
 * Leave concerns of rendering and state management almost entirely up to the user; fit any state model or backing store, enable any UI paradigm
 * Support nested dragging as a first-class use case, e.g. Trello-like interfaces
 * Support multiple simultaneous drag operations (for multi-touch environments)
-* Do not support file dragging; this is fundamentally a completely different operation, both conceptually and in terms of implementation
+* Do not support file dragging; this is fundamentally a completely different operation, both conceptually and in terms of implementation, and belongs in a different library (or just implement yourself)
 
 ## Usage example
 

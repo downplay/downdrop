@@ -4,8 +4,8 @@ import { dragDropContextShape } from "./DragDropProvider";
 
 export default class DropTarget extends Component {
     static propTypes = {
-        data: PropTypes.any.isRequired,
-        onOver: PropTypes.func.isRequired,
+        data: PropTypes.any,
+        onOver: PropTypes.func,
         onMove: PropTypes.func,
         onLeave: PropTypes.func,
         element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
@@ -13,6 +13,7 @@ export default class DropTarget extends Component {
 
     static defaultProps = {
         data: null,
+        onOver: null,
         onMove: null,
         onLeave: null,
         element: "div"
@@ -34,7 +35,9 @@ export default class DropTarget extends Component {
         if (!this.isDragging()) {
             return;
         }
-        this.props.onOver(e, this.props.data);
+        if (this.props.onOver) {
+            this.props.onOver(e, this.props.data);
+        }
     };
 
     handleMouseLeave = e => {

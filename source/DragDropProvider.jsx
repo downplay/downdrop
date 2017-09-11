@@ -1,6 +1,11 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 
+function eventToCoords(event) {
+    // TODO: Need touch support here
+    return { x: event.pageX, y: event.pageY };
+}
+
 export const dragDropContextShape = PropTypes.shape({
     isDragging: PropTypes.func.isRequired,
     beginDrag: PropTypes.func.isRequired
@@ -21,7 +26,9 @@ export default class DragDropProvider extends Component {
 
     state = {
         isDragging: false,
-        dragData: null
+        dragData: null,
+        dragComponent: null,
+        startPosition: null
     };
 
     getChildContext() {
@@ -29,7 +36,8 @@ export default class DragDropProvider extends Component {
             dragDropContext: {
                 isDragging: this.contextIsDragging,
                 beginDrag: this.contextBeginDrag,
-                getDragData: this.contextGetDragData
+                getDragData: this.contextGetDragData,
+                detachDragComponent: this.contextDetachDragComponent
             }
         };
     }
@@ -40,30 +48,88 @@ export default class DragDropProvider extends Component {
         this.unbindWindow();
     }
 
+    getEventContext(event) {
+        const position = eventToCoords(event);
+        return {
+            movedX: position.x - this.state.startPosition.x,
+            movedY: position.y - this.state.startPosition.y
+        };
+    }
+
     contextIsDragging = () => this.state.isDragging;
 
-    contextBeginDrag = (event, data) => {
+    contextBeginDrag = (event, data, component) => {
         window.addEventListener("mousemove", this.handleMouseMove);
         window.addEventListener("mouseup", this.handleMouseUp);
-        this.setState({ isDragging: true, dragData: data });
+        this.setState(
+            {
+                isDragging: true,
+                dragData: data,
+                dragComponent: component,
+                startPosition: eventToCoords(event)
+            },
+            () => {
+                if (
+                    this.state.dragComponent &&
+                    this.state.dragComponent.props.onDrag
+                ) {
+                    this.state.dragComponent.props.onDrag(
+                        event,
+                        this.contextGetDragData(),
+                        { movedX: 0, movedY: 0 }
+                    );
+                }
+            }
+        );
     };
 
     contextGetDragData = () => this.state.dragData;
+
+    contextDetachDragComponent = component => {
+        if (this.state.dragComponent === component) {
+            this.setState({ dragComponent: null });
+        }
+    };
 
     unbindWindow() {
         window.removeEventListener("mousemove", this.handleMouseMove);
         window.removeEventListener("mouseup", this.handleMouseUp);
     }
 
-    handleMouseMove = () => {};
+    handleMouseMove = e => {
+        // Call the move handler
+        if (this.props.onMove) {
+            this.props.onMove(
+                e,
+                this.contextGetDragData(),
+                this.getEventContext(e)
+            );
+        }
+        if (this.state.dragComponent && this.state.dragComponent.props.onMove) {
+            this.state.dragComponent.props.onMove(
+                e,
+                this.contextGetDragData(),
+                this.getEventContext(e)
+            );
+        }
+    };
 
-    handleMouseUp = () => {
+    handleMouseUp = e => {
         this.unbindWindow();
         // Call the drop handler
         if (this.props.onDrop) {
-            this.props.onDrop(this.contextGetDragData());
+            this.props.onDrop(
+                e,
+                this.contextGetDragData(),
+                this.getEventContext(e)
+            );
         }
-        this.setState({ isDragging: false, dragData: null });
+        this.setState({
+            isDragging: false,
+            dragData: null,
+            dragComponent: null,
+            startPosition: null
+        });
     };
 
     render() {

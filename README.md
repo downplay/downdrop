@@ -86,9 +86,14 @@ The dev server is hot module enabled so tweak at will.
 
 ## Version History
 
+### 0.2.0
+
+* During drag, supply movedX/movedY coords on a 3rd param
+* Fire events down to originating object if it still exists
+
 ### 0.1.0
 
-First release
+* First release
 
 ## Planned / Roadmap
 

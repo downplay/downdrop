@@ -7,12 +7,18 @@ export default class DragHandle extends Component {
     static propTypes = {
         data: PropTypes.any,
         onDrag: PropTypes.func,
-        element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+        onMove: PropTypes.func,
+        element: PropTypes.oneOfType([
+            PropTypes.element,
+            PropTypes.string,
+            PropTypes.func
+        ])
     };
 
     static defaultProps = {
         data: null,
         onDrag: null,
+        onMove: null,
         element: "div"
     };
 
@@ -20,20 +26,22 @@ export default class DragHandle extends Component {
         dragDropContext: dragDropContextShape
     };
 
+    componentWillUnmount() {
+        this.context.dragDropContext.detachDragComponent(this);
+    }
+
     handleMouseDown = e => {
-        if (this.props.onDrag) {
-            this.props.onDrag(e, this.props.data);
-        }
         // TODO: Allow cancelling the drag
         e.preventDefault();
-        this.context.dragDropContext.beginDrag(e, this.props.data);
+        this.context.dragDropContext.beginDrag(e, this.props.data, this);
     };
 
     render() {
         const {
             children,
             data,
-            element,
+            onMove,
+            onDrag,
             element: Element,
             ...others
         } = this.props;

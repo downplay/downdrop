@@ -13,18 +13,33 @@ const Wrapper = styled.div`
 class PositionableItem extends Component {
     state = {
         x: 0,
-        y: 0
+        y: 0,
+        movedX: 0,
+        movedY: 0
     };
-    handleDrag(event, data, context) {
-        this.setState({ x: context.offsetX, y: context.offsetY });
-    }
+
+    handleDrag = (event, data, context) => {
+        this.setState({
+            x: this.state.x + this.state.movedX,
+            y: this.state.y + this.state.movedY
+        });
+        this.handleMove(event, data, context);
+    };
+
+    handleMove = (event, data, context) => {
+        this.setState({ movedX: context.movedX, movedY: context.movedY });
+    };
+
     render() {
         return (
             <DragHandle
                 onDrag={this.handleDrag}
-                onMove={this.handleDrag}
+                onMove={this.handleMove}
                 element={Wrapper}
-                style={{ x: this.state.x, y: this.state.y }}
+                style={{
+                    left: this.state.x + this.state.movedX,
+                    top: this.state.y + this.state.movedY
+                }}
             >
                 {this.props.children}
             </DragHandle>

@@ -8,11 +8,7 @@ export default class DragHandle extends Component {
         data: PropTypes.any,
         onDrag: PropTypes.func,
         onMove: PropTypes.func,
-        element: PropTypes.oneOfType([
-            PropTypes.element,
-            PropTypes.string,
-            PropTypes.func
-        ])
+        element: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     };
 
     static defaultProps = {

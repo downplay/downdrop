@@ -8,7 +8,7 @@ export default class DropTarget extends Component {
         onOver: PropTypes.func,
         onMove: PropTypes.func,
         onLeave: PropTypes.func,
-        element: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+        element: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     };
 
     static defaultProps = {

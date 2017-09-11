@@ -2,7 +2,7 @@
 
 Pleasantly simple drag-and-drop for React Web.
 
-## Latest version: 0.1.0
+## Latest version: 0.2.0
 
 First release.
 
@@ -71,6 +71,20 @@ import { DragDropProvider } from "downdrop";
 
 Handler to be called when the user ends a drag operation by releasing the mouse
 
+`onMove: function(event: SyntheticEvent, data: any, context: eventContext)`
+
+`scrollNearViewportEdge: string(none|both|horizontal|vertical, default:both)`
+
+Whether to automatically scroll when dragging near the viewport edges. Can scroll on either axis, both or none.
+
+`scrollProximity: number(default: 50)`
+
+How near (in pixels) to the edge of the viewport the mouse must be in order to trigger viewport scrolling.
+
+`scrollSpeed: number(default: 10)`
+
+*Maximum* speed at which to scroll, in pixels per second. Scrolling will be faster the nearer the user hsa dragged to the viewport, from 0 at the edge of the promimity bound, up to the maximum when 1 pixel away from the edge.
+
 ## Examples
 
 Examples are found in https://github.com/downplay/downdrop/tree/master/examples/source/examples. To run them, clone the repository and execute:
@@ -85,6 +99,11 @@ Then navigate to `http://127.0.0.1:3311/`
 The dev server is hot module enabled so tweak at will.
 
 ## Version History
+
+### Next version
+
+* Scroll when near edge of viewport, see properties `scrollNearViewportEdge`, `scrollProximity`, and `scrollSpeed` of `<DragDropProvider>`.
+* Don't begin drag until input has moved a minimum number of pixels, see `minimumDragDistance` property of `<DragDropProvider>`
 
 ### 0.2.0
 

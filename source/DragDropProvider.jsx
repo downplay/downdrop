@@ -89,6 +89,7 @@ export default class DragDropProvider extends Component {
         const { scrollProximity, scrollSpeed } = this.props;
 
         if (this.props.scrollNearViewportEdge !== "none") {
+            const viewport = getViewport();
             const scrollAmount = value => {
                 if (value >= scrollProximity) return 0;
                 return Math.ceil(
@@ -101,16 +102,34 @@ export default class DragDropProvider extends Component {
                 this.props.scrollNearViewportEdge === "both" ||
                 this.props.scrollNearViewportEdge === "horizontal"
             ) {
-                const xn = scrollAmount(eventContext.viewLeft);
-                const xp = scrollAmount(eventContext.viewRight);
+                // Work out x scroll, don't scroll over existing bounds
+                const xn = Math.min(
+                    viewport.left,
+                    scrollAmount(eventContext.viewLeft)
+                );
+                const xp = Math.min(
+                    document.documentElement.scrollWidth -
+                        viewport.width -
+                        viewport.left,
+                    scrollAmount(eventContext.viewRight)
+                );
                 scroll.x = xn > xp ? -xn : xp;
             }
             if (
                 this.props.scrollNearViewportEdge === "both" ||
                 this.props.scrollNearViewportEdge === "vertical"
             ) {
-                const yn = scrollAmount(eventContext.viewTop);
-                const yp = scrollAmount(eventContext.viewBottom);
+                // Work out y scroll, don't scroll over existing bounds
+                const yn = Math.min(
+                    viewport.top,
+                    scrollAmount(eventContext.viewTop)
+                );
+                const yp = Math.min(
+                    document.documentElement.scrollHeight -
+                        viewport.height -
+                        viewport.top,
+                    scrollAmount(eventContext.viewBottom)
+                );
                 scroll.y = yn > yp ? -yn : yp;
             }
         }
@@ -136,6 +155,7 @@ export default class DragDropProvider extends Component {
         }
         // Move by that amount; must trigger mouse move so the dragged element can be
         // positioned
+        // TODO: Support a custom scroll element instead of window, and custom scrollbars
         window.scrollBy(scroll.x, scroll.y);
         // Using a fake move event to update state and let the element move with the cursor
         this.handleMouseMove({

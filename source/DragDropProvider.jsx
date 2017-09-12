@@ -35,8 +35,8 @@ export default class DragDropProvider extends Component {
     static defaultProps = {
         onDrop: null,
         scrollNearViewportEdge: "both",
-        scrollProximity: 80,
-        scrollSpeed: 900
+        scrollProximity: 100,
+        scrollSpeed: 1200
     };
 
     static childContextTypes = {
@@ -73,6 +73,8 @@ export default class DragDropProvider extends Component {
         const position = eventToCoords(event);
         const viewport = getViewport();
         return {
+            pageX: position.x,
+            pageY: position.y,
             movedX: position.x - this.state.startPosition.x,
             movedY: position.y - this.state.startPosition.y,
             viewLeft: position.x - viewport.left,
@@ -89,10 +91,10 @@ export default class DragDropProvider extends Component {
         if (this.props.scrollNearViewportEdge !== "none") {
             const scrollAmount = value => {
                 if (value >= scrollProximity) return 0;
-                return (
+                return Math.ceil(
                     (1 - Math.max(0, value) / scrollProximity) *
-                    scrollSpeed /
-                    60
+                        scrollSpeed /
+                        60
                 );
             };
             if (
@@ -134,15 +136,12 @@ export default class DragDropProvider extends Component {
         }
         // Move by that amount; must trigger mouse move so the dragged element can be
         // positioned
-
-        // const viewport = getViewport();
         window.scrollBy(scroll.x, scroll.y);
-        /*
-        this.setState(prevState => {
-            eventContext: {
-            }
+        // Using a fake move event to update state and let the element move with the cursor
+        this.handleMouseMove({
+            pageX: this.state.eventContext.pageX + scroll.x,
+            pageY: this.state.eventContext.pageY + scroll.y
         });
-        */
     };
 
     contextIsDragging = () => this.state.isDragging;

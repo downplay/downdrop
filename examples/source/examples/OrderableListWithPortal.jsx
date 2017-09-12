@@ -118,14 +118,26 @@ export default class OrderableList extends Component {
         const {
             items,
             dragIndex,
-            sourceBounds: { x, y },
+            sourceBounds: { x, y, width, height },
             movedX,
             movedY
         } = this.state;
         let transform;
         if (dragIndex !== null) {
+            // Prevent moving the element off the edge of the screen
+            // TODO: *Sometimes* it is possible to drag the element past edge of the screen. Haven't
+            // worked out why this is. Probably some rounding errors somewhere. Maybe solve this by
+            // making AbsoluteContainer 100% width and height with overflow: hidden.
+            const posX = Math.min(
+                Math.max(x + movedX, 0),
+                Math.floor(document.documentElement.scrollWidth - width - 1)
+            );
+            const posY = Math.min(
+                Math.max(y + movedY, 0),
+                Math.floor(document.documentElement.scrollHeight - height - 1)
+            );
             transform = {
-                transform: `translate(${x + movedX}px, ${y + movedY}px)`
+                transform: `translate(${posX}px, ${posY}px)`
             };
         }
         return (

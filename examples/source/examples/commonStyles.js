@@ -17,4 +17,7 @@ export const ItemWrapper = styled.div`
     justify-content: center;
 `;
 
-export const DragWrapper = styled.div`margin: 10px;`;
+export const DragWrapper = styled.div`
+    margin: 10px;
+    transition: margin-top 0.1s ease-out; /* For spacing while dragging over */
+`;

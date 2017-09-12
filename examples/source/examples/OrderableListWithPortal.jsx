@@ -41,6 +41,8 @@ const DragElement = ({ children, ...props }) => (
     </DragHandle>
 );
 
+const noStyle = {};
+
 export default class OrderableList extends Component {
     state = {
         items: sampleList,
@@ -101,16 +103,30 @@ export default class OrderableList extends Component {
     };
 
     renderItem = (item, index) => (
-        // Render the items but leave a gap for the one being dragged
+        // Render the items but leave a gap for the one being dragged. The gap is
+        // conditionally applied with a margin the size of the original dragged element
+        // (with extra adjustment for margin)
         <DropTarget
             key={item}
             data={index}
             onOver={this.handleOver}
             element="li"
         >
-            <DragElement data={index} onDrag={this.handleDrag}>
-                {item}
-            </DragElement>
+            {index === this.state.dragIndex ? null : (
+                <DragElement
+                    data={index}
+                    onDrag={this.handleDrag}
+                    style={
+                        index === this.state.dragPosition ? (
+                            { marginTop: this.state.sourceBounds.height + 20 }
+                        ) : (
+                            noStyle
+                        )
+                    }
+                >
+                    {item}
+                </DragElement>
+            )}
         </DropTarget>
     );
 

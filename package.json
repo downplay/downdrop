@@ -7,22 +7,25 @@
         "url": "https://github.com/downplay/downdrop.git"
     },
     "main": "main.js",
-    "files": ["main.js.map"],
+    "files": [
+        "main.js.map"
+    ],
     "scripts": {
         "precommit": "lint-staged",
         "scrub": "babel-node ./build/scrub.js",
         "assemble": "babel-node ./build/assemble.js",
         "build": "npm-run-all scrub build-all",
         "build-all": "npm-run-all --parallel build-core assemble",
-        "build-core":
-            "cross-env NODE_ENV=production  DOWNDROP_BUILD=core webpack --config ./build/entry.js",
-        "build-core-dev":
-            "cross-env NODE_ENV=development DOWNDROP_BUILD=core webpack --config ./build/entry.js --watch",
+        "build-core": "cross-env NODE_ENV=production  DOWNDROP_BUILD=core webpack --config ./build/entry.js",
+        "build-core-dev": "cross-env NODE_ENV=development DOWNDROP_BUILD=core webpack --config ./build/entry.js --watch",
         "examples": "node examples/entry.js",
         "examples-watch": "nodemon examples/entry.js"
     },
     "lint-staged": {
-        "*.{js,jsx}": ["eslint", "git add"]
+        "*.{js,jsx}": [
+            "eslint",
+            "git add"
+        ]
     },
     "keywords": [
         "react",
@@ -90,6 +93,7 @@
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
         "react-hot-loader": "^3.0.0-beta.7",
+        "react-portal": "^3.1.0",
         "react-router-dom": "^4.1.2",
         "reset-css": "^2.2.1",
         "style-loader": "^0.18.2",

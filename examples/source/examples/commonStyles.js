@@ -12,8 +12,9 @@ export const ItemWrapper = styled.div`
     background-color: #fcc;
     height: 32px;
     width: 100px;
-    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 `;
+
+export const DragWrapper = styled.div`margin: 10px;`;

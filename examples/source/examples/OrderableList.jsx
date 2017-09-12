@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import { DragDropProvider, DragHandle, DropTarget } from "downdrop";
 
 import sampleList from "../resources/sampleList";
-import { ListWrapper, ItemWrapper } from "./commonStyles";
+import { ListWrapper, ItemWrapper, DragWrapper } from "./commonStyles";
+
+const DragElement = ({ children, ...props }) => (
+    <DragHandle element={DragWrapper} {...props}>
+        <ItemWrapper>
+            <span>{children}</span>
+        </ItemWrapper>
+    </DragHandle>
+);
 
 export default class OrderableList extends Component {
     state = {
@@ -58,11 +66,7 @@ export default class OrderableList extends Component {
             onOver={this.handleOver}
             element="li"
         >
-            <DragHandle data={index} onDrag={this.handleDrag}>
-                <ItemWrapper>
-                    <span>{item}</span>
-                </ItemWrapper>
-            </DragHandle>
+            <DragElement data={index} onDrag={this.handleDrag} />
         </DropTarget>
     );
 

@@ -104,6 +104,8 @@ The dev server is hot module enabled so tweak at will.
 
 * Scroll when near edge of viewport, see properties `scrollNearViewportEdge`, `scrollProximity`, and `scrollSpeed` of `<DragDropProvider>`.
 * Don't begin drag until input has moved a minimum number of pixels, see `minimumDragDistance` property of `<DragDropProvider>`
+* Added an example `OrderableListWithPortal` demonstrating using `react-portal` to render the element being dragged
+* Dropped peer dependency on `react-dom`
 
 ### 0.2.0
 

@@ -34,7 +34,9 @@ export default class DragDropProvider extends Component {
 
     static defaultProps = {
         onDrop: null,
-        scrollNearViewportEdge: "both"
+        scrollNearViewportEdge: "both",
+        scrollProximity: 80,
+        scrollSpeed: 900
     };
 
     static childContextTypes = {
@@ -81,14 +83,16 @@ export default class DragDropProvider extends Component {
     }
 
     getScrollAmount(eventContext) {
-        const scrollBleed = 50;
-        const scrollSpeed = 500;
         const scroll = { x: 0, y: 0 };
+        const { scrollProximity, scrollSpeed } = this.props;
+
         if (this.props.scrollNearViewportEdge !== "none") {
             const scrollAmount = value => {
-                if (value >= scrollBleed) return 0;
+                if (value >= scrollProximity) return 0;
                 return (
-                    (1 - Math.max(0, value) / scrollBleed) * scrollSpeed / 60
+                    (1 - Math.max(0, value) / scrollProximity) *
+                    scrollSpeed /
+                    60
                 );
             };
             if (
@@ -118,6 +122,7 @@ export default class DragDropProvider extends Component {
     clearScrollInterval() {
         if (this.scrollInterval) {
             clearInterval(this.scrollInterval);
+            delete this.scrollInterval;
         }
     }
 

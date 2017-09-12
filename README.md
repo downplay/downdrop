@@ -1,10 +1,10 @@
 # Downdrop
 
-Pleasantly simple drag-and-drop for React Web.
+Pleasantly minimal drag-and-drop for React Web.
 
-## Latest version: 0.2.0
+## Latest version: 0.3.0
 
-First release.
+Now with auto-scrolling.
 
 ## Why another drag-and-drop library?
 
@@ -104,7 +104,7 @@ The dev server is hot module enabled so tweak at will.
 
 ## Version History
 
-### Next version
+### 0.3.0
 
 * Scroll when near edge of viewport, see properties `scrollNearViewportEdge`, `scrollProximity`, and `scrollSpeed` of `<DragDropProvider>`.
 * Don't begin drag until input has moved a minimum number of pixels, see `minimumDragDistance` property of `<DragDropProvider>`

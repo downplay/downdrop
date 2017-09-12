@@ -29,14 +29,18 @@ export default class DragDropProvider extends Component {
             "both",
             "horizontal",
             "vertical"
-        ])
+        ]),
+        scrollProximity: PropTypes.number,
+        scrollSpeed: PropTypes.number,
+        minimumDragDistance: PropTypes.number
     };
 
     static defaultProps = {
         onDrop: null,
         scrollNearViewportEdge: "both",
         scrollProximity: 100,
-        scrollSpeed: 1200
+        scrollSpeed: 1200,
+        minimumDragDistance: 3
     };
 
     static childContextTypes = {
@@ -167,21 +171,33 @@ export default class DragDropProvider extends Component {
     contextIsDragging = () => this.state.isDragging;
 
     contextBeginDrag = (event, data, component) => {
+        // Cancel default event otherwise the mouse starts selecting things
+        // TODO: Not really ideal. Could cancel stuff we don't otherwise want to cancel.
+        // Maybe better to let the user deal with how to prevent strange artifacts?
+        event.preventDefault();
+        // Set up events
         window.addEventListener("mousemove", this.handleMouseMove);
         window.addEventListener("mouseup", this.handleMouseUp);
         this.setState({
-            isDragging: true,
+            isDragging: false,
             dragData: data,
             dragComponent: component,
             startPosition: eventToCoords(event)
         });
-        if (component && component.props.onDrag) {
-            component.props.onDrag(event, data, {
-                movedX: 0,
-                movedY: 0
-            });
+        // Start drag straight away if no min drag distance
+        if (this.props.minimumDragDistance === 0) {
+            this.beginDrag(event, data, component, { movedX: 0, movedY: 0 });
         }
     };
+
+    beginDrag(e, data, component, context) {
+        if (component && component.props.onDrag) {
+            component.props.onDrag(e, data, context);
+        }
+        this.setState({
+            isDragging: true
+        });
+    }
 
     contextGetDragData = () => this.state.dragData;
 
@@ -197,8 +213,22 @@ export default class DragDropProvider extends Component {
     }
 
     handleMouseMove = e => {
-        // Call the move handler
+        // Get coords from event
         const eventContext = this.getEventContext(e);
+        // Has drag really started yet?
+        if (!this.state.isDragging) {
+            const { dragComponent, dragData } = this.state;
+            if (
+                Math.abs(eventContext.movedX) >=
+                    this.props.minimumDragDistance ||
+                Math.abs(eventContext.movedY) >= this.props.minimumDragDistance
+            ) {
+                // Actually dragging now
+                this.beginDrag(e, dragData, dragComponent, eventContext);
+            }
+            return;
+        }
+        // Call the move handler
         if (this.props.onMove) {
             this.props.onMove(e, this.contextGetDragData(), eventContext);
         }
@@ -227,7 +257,7 @@ export default class DragDropProvider extends Component {
         this.unbindWindow();
         this.clearScrollInterval();
         // Call the drop handler
-        if (this.props.onDrop) {
+        if (this.props.onDrop && this.state.isDragging) {
             this.props.onDrop(
                 e,
                 this.contextGetDragData(),

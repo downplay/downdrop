@@ -28,7 +28,6 @@ export default class DragHandle extends Component {
 
     handleMouseDown = e => {
         // TODO: Allow cancelling the drag
-        e.preventDefault();
         this.context.dragDropContext.beginDrag(e, this.props.data, this);
     };
 

@@ -85,6 +85,10 @@ How near (in pixels) to the edge of the viewport the mouse must be in order to t
 
 *Maximum* speed at which to scroll, in pixels per second. Scrolling will be faster the nearer the user hsa dragged to the viewport, from 0 at the edge of the promimity bound, up to the maximum when 1 pixel away from the edge.
 
+`minimumDragDistance: number(default: 3)`
+
+Number of pixels the mouse must move after pressing the button down before the element is actually considered to be dragging. Prevents accidentally moving things when trying to just click on them.
+
 ## Examples
 
 Examples are found in https://github.com/downplay/downdrop/tree/master/examples/source/examples. To run them, clone the repository and execute:

@@ -77,11 +77,11 @@ Handler to be called when the user ends a drag operation by releasing the mouse
 
 Whether to automatically scroll when dragging near the viewport edges. Can scroll on either axis, both or none.
 
-`scrollProximity: number(default: 50)`
+`scrollProximity: number(default: 100)`
 
 How near (in pixels) to the edge of the viewport the mouse must be in order to trigger viewport scrolling.
 
-`scrollSpeed: number(default: 10)`
+`scrollSpeed: number(default: 1200)`
 
 *Maximum* speed at which to scroll, in pixels per second. Scrolling will be faster the nearer the user hsa dragged to the viewport, from 0 at the edge of the promimity bound, up to the maximum when 1 pixel away from the edge.
 

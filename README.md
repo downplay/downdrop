@@ -110,6 +110,7 @@ The dev server is hot module enabled so tweak at will.
 (https://developer.mozilla.org/en-US/docs/Web/API/document/scrollingElement) ...
 maybe use an implementation like this in future but research first:
 https://github.com/facebook/fbjs/blob/master/packages/fbjs/src/core/dom/getDocumentScrollElement.js
+* Change order of Babel plugins to fix component names in build
 
 ### 0.3.0
 

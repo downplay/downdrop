@@ -70,6 +70,7 @@ const webpackConfig = {
                             ),
                             ignore: "node_modules/**/*",
                             plugins: [
+                                "babel-plugin-add-react-displayname",
                                 "babel-plugin-transform-class-properties",
                                 [
                                     "babel-plugin-transform-runtime",
@@ -80,8 +81,7 @@ const webpackConfig = {
                                     }
                                 ],
                                 "babel-plugin-transform-object-rest-spread",
-                                "babel-plugin-transform-decorators-legacy",
-                                "babel-plugin-add-react-displayname"
+                                "babel-plugin-transform-decorators-legacy"
                             ],
                             presets: [
                                 "babel-preset-react",
@@ -97,27 +97,7 @@ const webpackConfig = {
                     },
                     "eslint-loader"
                 ]
-            },
-            {
-                test: /\.svg$/,
-                use: {
-                    loader: "svg-url-loader",
-                    options: {}
-                }
             }
-            /* ,
-            __DEV__
-                ? {
-                      test: /\.css$/,
-                      loader: `style-loader!css-loader?modules&importLoaders=1&localIdentName=${cssIdent}!postcss-loader`
-                  }
-                : {
-                      test: /\.css$/,
-                      use: ExtractTextPlugin.extract({
-                          fallback: "style-loader",
-                          use: `css-loader?modules&importLoaders=1&localIdentName=${cssIdent}!postcss-loader`
-                      })
-                } */
         ]
     }
 };

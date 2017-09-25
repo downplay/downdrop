@@ -1,6 +1,6 @@
 # Downdrop
 
-Pleasantly minimal drag-and-drop for React Web.
+Pleasantly minimal drag-and-drop for React Web. Only 10kb minified.
 
 ## Latest version: 0.3.0
 
@@ -103,6 +103,13 @@ Then navigate to `http://127.0.0.1:3311/`
 The dev server is hot module enabled so tweak at will.
 
 ## Version History
+
+### Next version
+
+* Use `document.scrollingElement` if available to determine correct element to use for scrolling
+(https://developer.mozilla.org/en-US/docs/Web/API/document/scrollingElement) ...
+maybe use an implementation like this in future but research first:
+https://github.com/facebook/fbjs/blob/master/packages/fbjs/src/core/dom/getDocumentScrollElement.js
 
 ### 0.3.0
 

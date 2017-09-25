@@ -6,10 +6,17 @@ function eventToCoords(event) {
     return { x: event.pageX, y: event.pageY };
 }
 
+function getScrollElement() {
+    return (
+        document.scrollingElement || document.documentElement || document.body
+    );
+}
+
 function getViewport() {
+    const scrollElement = getScrollElement();
     return {
-        left: window.pageXOffset || document.documentElement.scrollLeft || 0,
-        top: window.pageYOffset || document.documentElement.scrollTop || 0,
+        left: window.pageXOffset || scrollElement.scrollLeft || 0,
+        top: window.pageYOffset || scrollElement.scrollTop || 0,
         width: window.innerWidth,
         height: window.innerHeight
     };
@@ -102,6 +109,7 @@ export default class DragDropProvider extends Component {
                         60
                 );
             };
+            const scrollElement = getScrollElement();
             if (
                 this.props.scrollNearViewportEdge === "both" ||
                 this.props.scrollNearViewportEdge === "horizontal"
@@ -112,9 +120,7 @@ export default class DragDropProvider extends Component {
                     scrollAmount(eventContext.viewLeft)
                 );
                 const xp = Math.min(
-                    document.documentElement.scrollWidth -
-                        viewport.width -
-                        viewport.left,
+                    scrollElement.scrollWidth - viewport.width - viewport.left,
                     scrollAmount(eventContext.viewRight)
                 );
                 scroll.x = xn > xp ? -xn : xp;
@@ -129,9 +135,7 @@ export default class DragDropProvider extends Component {
                     scrollAmount(eventContext.viewTop)
                 );
                 const yp = Math.min(
-                    document.documentElement.scrollHeight -
-                        viewport.height -
-                        viewport.top,
+                    scrollElement.scrollHeight - viewport.height - viewport.top,
                     scrollAmount(eventContext.viewBottom)
                 );
                 scroll.y = yn > yp ? -yn : yp;
